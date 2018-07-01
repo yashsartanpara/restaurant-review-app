@@ -6,7 +6,16 @@ var newMap;
  */
 document.addEventListener('DOMContentLoaded', (event) => {
     initMap();
+    // Remove links of map from tab index
+    setTimeout(function () {
+        mapChildren = document.getElementById('map').querySelectorAll('a');
+        console.log(mapChildren);
+        mapChildren.forEach(e => {
+            e.setAttribute('tabindex', '-1')
+        })
+    }, 0);
 });
+
 
 /**
  * Initialize leaflet map
@@ -33,23 +42,7 @@ initMap = () => {
             DBHelper.mapMarkerForRestaurant(self.restaurant, self.newMap);
         }
     });
-}
-
-/* window.initMap = () => {
-  fetchRestaurantFromURL((error, restaurant) => {
-    if (error) { // Got an error!
-      console.error(error);
-    } else {
-      self.map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 16,
-        center: restaurant.latlng,
-        scrollwheel: false
-      });
-      fillBreadcrumb();
-      DBHelper.mapMarkerForRestaurant(self.restaurant, self.map);
-    }
-  });
-} */
+};
 
 /**
  * Get current restaurant from page URL.
@@ -100,7 +93,7 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
     }
     // fill reviews
     fillReviewsHTML();
-}
+};
 
 /**
  * Create restaurant operating hours HTML table and add it to the webpage.
@@ -120,7 +113,7 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
 
         hours.appendChild(row);
     }
-}
+};
 
 /**
  * Create all reviews HTML and add them to the webpage.
@@ -142,7 +135,7 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
         ul.appendChild(createReviewHTML(review));
     });
     container.appendChild(ul);
-}
+};
 
 /**
  * Create review HTML and add it to the webpage.
@@ -166,7 +159,7 @@ createReviewHTML = (review) => {
     li.appendChild(comments);
 
     return li;
-}
+};
 
 /**
  * Add restaurant name to the breadcrumb navigation menu
@@ -176,7 +169,7 @@ fillBreadcrumb = (restaurant = self.restaurant) => {
     const li = document.createElement('li');
     li.innerHTML = restaurant.name;
     breadcrumb.appendChild(li);
-}
+};
 
 /**
  * Get a parameter by name from page URL.
@@ -192,4 +185,4 @@ getParameterByName = (name, url) => {
     if (!results[2])
         return '';
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
-}
+};
