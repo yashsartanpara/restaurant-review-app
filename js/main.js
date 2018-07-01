@@ -4,7 +4,7 @@ function Register(){
 
 Register.prototype.registerServiceWorker = () => {
     console.log(navigator.serviceWorker);
-    navigator.serviceWorker.register('./sw.js').then(function (registeration) {
+    navigator.serviceWorker.register('./js/sw.js').then(function (registeration) {
         console.log('worked',registeration);
     }).catch(function () {
         console.log('failed');
